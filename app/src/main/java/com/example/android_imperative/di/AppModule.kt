@@ -1,5 +1,8 @@
 package com.example.android_imperative.di
 
+import android.app.Application
+import com.example.android_imperative.db.AppDatabase
+import com.example.android_imperative.db.dao.TvShowDao
 import com.example.android_imperative.networking.Server.IS_TESTER
 import com.example.android_imperative.networking.Server.SERVER_DEVELOPMENT
 import com.example.android_imperative.networking.Server.SERVER_PRODUCTION
@@ -14,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModel {
+class AppModule {
 
     /*
     Retrofit Related
@@ -38,4 +41,15 @@ class AppModel {
     Room Related
      */
 
+    @Provides
+    @Singleton
+    fun appDatabase(context: Application): AppDatabase {
+        return AppDatabase.getAppDBInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun tvShowDao(appDatabase: AppDatabase): TvShowDao {
+        return appDatabase.getTVShowDao()
+    }
 }

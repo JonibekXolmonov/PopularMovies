@@ -2,6 +2,7 @@ package com.example.android_imperative.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android_imperative.model.TVShow
 import com.example.android_imperative.model.TVShowDetails
 import com.example.android_imperative.model.TVShowPopular
@@ -15,15 +16,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject
-constructor(private val tvShowRepository: TVShowRepository): ViewModel() {
+constructor(private val tvShowRepository: TVShowRepository) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
+
     val tvShowsFromApi = MutableLiveData<ArrayList<TVShow>>()
-    val tvShowsFromDB = MutableLiveData<List<TVShow>>()
 
     val tvShowPopular = MutableLiveData<TVShowPopular>()
-    val tvShowDetails = MutableLiveData<TVShowDetails>()
 
     /**
      * Retrofit Related
@@ -52,7 +52,7 @@ constructor(private val tvShowRepository: TVShowRepository): ViewModel() {
     }
 
 
-    private fun onError(message: String){
+    private fun onError(message: String) {
         errorMessage.value = message
         isLoading.value = false
     }
@@ -60,4 +60,10 @@ constructor(private val tvShowRepository: TVShowRepository): ViewModel() {
     /**
      * Room Related
      */
+
+    fun insertTVShowsToDB(tvShow: TVShow) {
+        viewModelScope.launch {
+            tvShowRepository.insertTVShowToDB(tvShow)
+        }
+    }
 }

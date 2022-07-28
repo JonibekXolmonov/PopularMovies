@@ -44,7 +44,7 @@ class TVShowAdapter(
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setNewTVShows(tvShows: ArrayList<TVShow>) {
+    fun setNewTVShows(tvShows: List<TVShow>) {
         items.clear()
         items.addAll(tvShows)
         notifyDataSetChanged()

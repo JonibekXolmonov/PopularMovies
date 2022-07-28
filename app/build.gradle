@@ -34,16 +34,26 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    ndkVersion '24.0.8215888'
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
 }
 
 dependencies {
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def retrofit_version = "2.9.0"
     def room_version = "2.4.2"
     def hilt_version = "2.42"
     def ktx_version = "1.5.0"
     def coroutines_version = "1.6.1"
     def glide_version = "4.13.2"
+    def navigation_version = "2.5.0"
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -65,16 +75,20 @@ dependencies {
     implementation "androidx.activity:activity-ktx:$ktx_version"
     implementation "androidx.fragment:fragment-ktx:$ktx_version"
 
-// Dagger hilt
+    // Dagger hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-// Coroutines
+    // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
-//Glide
+    //Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 }
